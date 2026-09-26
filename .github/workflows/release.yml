@@ -1,0 +1,47 @@
+name: Validate and release
+
+on:
+  push:
+    branches: [main]
+    tags: ["v*"]
+  pull_request:
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Validate marketplace and plugin
+        run: |
+          npm install -g @anthropic-ai/claude-code
+          claude plugin validate . --strict
+          claude plugin validate plugins/precise-response --strict
+
+      - name: Check tag matches plugin version
+        if: startsWith(github.ref, 'refs/tags/v')
+        run: |
+          version=$(jq -r .version plugins/precise-response/.claude-plugin/plugin.json)
+          [ "v$version" = "$GITHUB_REF_NAME" ] || { echo "Tag $GITHUB_REF_NAME != plugin.json version $version"; exit 1; }
+
+      # ZIP root must be the skill folder itself, as claude.ai requires
+      - name: Build claude.ai upload ZIP
+        run: cd plugins/precise-response/skills && zip -r "$GITHUB_WORKSPACE/precise-response.zip" precise-response
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: precise-response
+          path: precise-response.zip
+
+      - name: Publish GitHub release
+        if: startsWith(github.ref, 'refs/tags/v')
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: gh release create "$GITHUB_REF_NAME" precise-response.zip --generate-notes
