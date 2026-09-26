@@ -1,0 +1,15 @@
+{
+  "name": "precise-response",
+  "owner": {
+    "name": "Ishit Mehta",
+    "url": "https://github.com/ishitmehta1-art"
+  },
+  "description": "Skills that cut conversational padding so free-tier limits last longer.",
+  "plugins": [
+    {
+      "name": "precise-response",
+      "source": "./plugins/precise-response",
+      "description": "Concise-by-default answers for planning, Q&A and decisions; expands only when a short answer would be incomplete."
+    }
+  ]
+}

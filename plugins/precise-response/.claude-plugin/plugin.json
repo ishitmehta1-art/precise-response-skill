@@ -1,0 +1,14 @@
+{
+  "name": "precise-response",
+  "displayName": "Precise Response",
+  "version": "1.1.0",
+  "description": "Concise-by-default answers for planning, Q&A and decisions; expands only when a short answer would be incomplete.",
+  "author": {
+    "name": "Ishit Mehta",
+    "url": "https://github.com/ishitmehta1-art"
+  },
+  "homepage": "https://github.com/ishitmehta1-art/precise-response-skill",
+  "repository": "https://github.com/ishitmehta1-art/precise-response-skill",
+  "license": "MIT",
+  "keywords": ["tokens", "concise", "free-tier", "planning", "usage-limits"]
+}

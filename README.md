@@ -70,14 +70,26 @@ Five representative closed/simple questions, written both as a typical unconstra
 
 ## Install
 
-**Claude.ai / Claude Cowork:** Customize → Skills → "+" → Create skill → upload a ZIP of the `precise-response/` folder (the ZIP's root must be the skill folder itself, not a wrapper folder).
-
-**Claude Code:**
-```bash
-git clone https://github.com/<your-username>/precise-response-skill.git
-cp -r precise-response-skill/precise-response ~/.claude/skills/
+**Claude Code (recommended):** run these two commands inside Claude Code.
 ```
-Start a new session and the skill loads automatically.
+/plugin marketplace add ishitmehta1-art/precise-response-skill
+/plugin install precise-response@precise-response
+```
+To get new versions later: `/plugin marketplace update precise-response`.
+
+**Claude.ai / Claude Cowork:** download `precise-response.zip` from the [latest release](https://github.com/ishitmehta1-art/precise-response-skill/releases/latest), then Customize → Skills → "+" → Create skill → upload the ZIP.
+
+**Manual copy (Claude Code, no plugin):**
+```bash
+git clone https://github.com/ishitmehta1-art/precise-response-skill.git
+cp -r precise-response-skill/plugins/precise-response/skills/precise-response ~/.claude/skills/
+```
+
+## Releasing a new version
+
+1. Edit `plugins/precise-response/skills/precise-response/SKILL.md`.
+2. Bump `version` in `plugins/precise-response/.claude-plugin/plugin.json`.
+3. Push a matching tag, e.g. `git tag v1.1.0 && git push origin v1.1.0`. CI validates the plugin and attaches a fresh ZIP to a GitHub release.
 
 ## Contributing
 
